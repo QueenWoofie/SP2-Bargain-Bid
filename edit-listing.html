@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bargain Bid – Edit Listing</title>
+    <link rel="icon" href="/img/favicon.ico" />
+    <link href="/css/style.css" rel="stylesheet" />
+  </head>
+  <body class="bg-base-100 text-neutral">
+    <main class="mx-auto max-w-2xl px-4 py-8">
+      <h1 class="mb-4 text-2xl font-bold">Edit listing</h1>
+
+      <form id="editForm" class="space-y-4 rounded-xl border bg-white p-6">
+        <div>
+          <label class="mb-1 block text-sm font-medium" for="title">Title</label>
+          <input id="title" name="title" class="w-full rounded border px-3 py-2" required />
+        </div>
+
+        <div>
+          <label class="mb-1 block text-sm font-medium" for="description">Description</label>
+          <textarea
+            id="description"
+            name="description"
+            class="w-full rounded border px-3 py-2"
+            rows="4"
+          ></textarea>
+        </div>
+
+        <div>
+          <label class="mb-1 block text-sm font-medium" for="tags">Tags (comma-separated)</label>
+          <input id="tags" name="tags" class="w-full rounded border px-3 py-2" />
+        </div>
+
+        <div>
+          <label class="mb-1 block text-sm font-medium" for="media"
+            >Image URLs (comma-separated)</label
+          >
+          <input id="media" name="media" class="w-full rounded border px-3 py-2" />
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button
+            id="saveBtn"
+            class="rounded bg-primary px-4 py-2 font-semibold text-white hover:bg-primary/90"
+          >
+            Save changes
+          </button>
+          <button
+            id="deleteBtn"
+            type="button"
+            class="rounded border border-error bg-white px-4 py-2 text-error"
+          >
+            Delete listing
+          </button>
+          <a href="/listings.html" class="ml-auto rounded border bg-white px-4 py-2">Cancel</a>
+        </div>
+
+        <p id="editError" class="hidden text-error"></p>
+        <p id="editInfo" class="text-sm text-neutral/70">
+          Note: You cannot change the "endsAt" after creation.
+        </p>
+      </form>
+    </main>
+
+    <script type="module" src="/js/app.js"></script>
+    <script type="module" src="/js/pages/listing-edit.js"></script>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bargain Bid – Home</title>
+    <link rel="icon" href="/img/favicon.ico" />
+    <link href="/css/style.css" rel="stylesheet" />
+  </head>
+  <body class="bg-base-100 text-neutral">
+    <section class="bg-gradient-to-r from-primary to-accent py-16 text-white">
+      <div class="mx-auto max-w-5xl px-4 text-center">
+        <h1 class="mb-3 text-4xl font-extrabold tracking-tight">Welcome to Bargain Bid</h1>
+        <p class="mb-6 text-lg opacity-90">Bid, sell, and discover great deals.</p>
+        <div class="flex justify-center gap-3">
+          <a
+            href="/listings.html"
+            class="rounded-lg bg-secondary px-5 py-3 font-semibold text-white shadow hover:bg-secondary/90"
+          >
+            Browse Listings
+          </a>
+          <a
+            href="/create-listing.html"
+            class="rounded-lg border bg-white px-5 py-3 font-semibold text-neutral hover:bg-base-200"
+          >
+            Create Listing
+          </a>
+        </div>
+      </div>
+    </section>
+    <section class="mx-auto max-w-6xl px-4 py-10">
+      <h2 class="mb-6 text-2xl font-semibold">Latest Listings</h2>
+      <div id="homeFeed" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
+      <p id="homeStatus" class="mt-4 text-sm text-neutral/70"></p>
+    </section>
+
+    <script type="module" src="/js/app.js"></script>
+    <script type="module" src="/js/pages/home.js"></script>
+  </body>
+</html>

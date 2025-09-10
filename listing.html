@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Bargain Bid – Listing</title>
+    <link rel="icon" href="/img/favicon.ico" />
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body class="bg-base-100 text-neutral">
+  <main class="max-w-5xl mx-auto px-4 py-8">
+    <a href="/listings.html" class="inline-block mb-4 text-sm underline">← Back to listings</a>
+
+    <section id="detail" class="bg-white border rounded-xl p-4 md:p-6 shadow">
+      <div id="hero" class="w-full h-60 bg-base-200 rounded mb-4"></div>
+
+      <h1 id="title" class="text-2xl font-bold mb-1"></h1>
+      <p id="subtitle" class="text-sm text-neutral/70 mb-4"></p>
+
+      <div class="mt-2 flex gap-2">
+  <a id="ownerEditBtn" href="#" class="hidden px-3 py-2 rounded border">Edit</a>
+  <button id="ownerDeleteBtn" type="button" class="hidden px-3 py-2 rounded border text-error border-error">Delete</button>
+</div>
+
+      <div class="grid gap-6 md:grid-cols-3">
+        <div class="md:col-span-2">
+          <h2 class="font-semibold mb-2">Description</h2>
+          <p id="description" class="text-neutral/90"></p>
+
+          <h3 class="font-semibold mt-6 mb-2">Images</h3>
+          <div id="gallery" class="grid grid-cols-3 gap-2"></div>
+        </div>
+
+        <aside class="md:col-span-1">
+          <div class="border rounded-xl p-4">
+            <p class="text-sm mb-1"><span class="font-semibold">Seller:</span> <span id="seller">-</span></p>
+            <p class="text-sm mb-1"><span class="font-semibold">Ends:</span> <span id="ends"></span></p>
+            <p class="text-sm mb-1"><span class="font-semibold">Bids:</span> <span id="bidsCount">0</span></p>
+            <p class="text-sm mb-3"><span class="font-semibold">Top bid:</span> <span id="topBid">0</span></p>
+
+            <form id="bidForm" class="mt-3 hidden">
+            <label class="block text-sm font-medium mb-1" for="bidAmount">Your bid</label>
+            <input id="bidAmount" name="bidAmount" type="number" min="1" step="1" class="w-full border rounded px-3 py-2" required>
+            <button id="bidBtn" class="mt-3 w-full bg-secondary text-white rounded px-4 py-2 hover:bg-secondary/90">
+                Place bid
+            </button>
+            <p id="bidError" class="hidden text-error text-sm mt-2"></p>
+            </form>
+            <p id="bidNote" class="text-xs text-neutral/60 mt-2">Login to bid.</p>
+
+          <div class="mt-4">
+            <h3 class="font-semibold mb-2">Recent bids</h3>
+            <ul id="bidsList" class="space-y-2 text-sm"></ul>
+          </div>
+        </aside>
+      </div>
+
+      <p id="error" class="hidden text-error mt-4"></p>
+    </section>
+  </main>
+
+  <script type="module" src="/js/app.js"></script>
+  <script type="module" src="/js/pages/listing-detail.js"></script>
+</body>
+</html>
