@@ -1,121 +1,121 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bargain Bid – Profile</title>
     <link rel="icon" href="/img/favicon.ico" />
     <link href="/css/style.css" rel="stylesheet" />
-  </head>
-  <body class="bg-base-100 text-neutral">
+</head>
+<body class="bg-base-100 text-neutral">
     <main class="mx-auto max-w-5xl px-4 py-8">
-      <a href="/listings.html" class="mb-4 inline-block text-sm underline">← Back to listings</a>
+        <a href="/listings.html" class="mb-4 inline-block text-sm underline">← Back to listings</a>
 
-      <section class="relative">
-        <div
-          id="hero"
-          class="h-40 overflow-visible rounded-xl bg-base-200 bg-cover bg-center md:h-56"
-        ></div>
+        <section class="relative">
+            <div
+            id="hero"
+            class="h-40 overflow-visible rounded-xl bg-base-200 bg-cover bg-center md:h-56"
+            ></div>
 
-        <div class="mx-auto max-w-5xl px-4">
-          <div class="-mt-10 flex items-end gap-4">
-            <img
-              id="avatar"
-              src=""
-              alt=""
-              class="relative z-10 h-24 w-24 rounded-full bg-white object-cover shadow ring-2 ring-white md:h-28 md:w-28"
-            />
-            <div class="pb-1">
-              <h1 id="name" class="text-xl font-bold leading-tight md:text-2xl"></h1>
-              <p id="email" class="text-sm text-neutral/70"></p>
+            <div class="mx-auto max-w-5xl px-4">
+            <div class="-mt-10 flex items-end gap-4">
+                <img
+                id="avatar"
+                src=""
+                alt=""
+                class="relative z-10 h-24 w-24 rounded-full bg-white object-cover shadow ring-2 ring-white md:h-28 md:w-28"
+                />
+                <div class="pb-1">
+                <h1 id="name" class="text-xl font-bold leading-tight md:text-2xl"></h1>
+                <p id="email" class="text-sm text-neutral/70"></p>
+                </div>
             </div>
-          </div>
+            </div>
+        </section>
+
+        <section class="grid gap-6 md:grid-cols-3">
+            <div class="rounded-xl border bg-white p-4 md:col-span-2">
+            <h2 class="mb-2 font-semibold">Bio</h2>
+            <p id="bio" class="text-neutral/90"></p>
+            </div>
+
+            <aside class="rounded-xl border bg-white p-4">
+            <h3 class="mb-2 font-semibold">Account</h3>
+            <p class="text-sm">
+                <span class="font-semibold">Credits:</span> <span id="credits">0</span>
+            </p>
+            <div id="ownerActions" class="mt-4 hidden">
+                <button
+                id="editToggle"
+                class="w-full rounded bg-primary px-4 py-2 text-white hover:bg-primary/90"
+                >
+                Edit profile
+                </button>
+            </div>
+            </aside>
+        </section>
+
+        <section id="editSection" class="mt-6 hidden rounded-xl border bg-white p-4">
+            <h2 class="mb-4 font-semibold">Edit profile</h2>
+            <form id="profileForm" class="grid gap-4 md:grid-cols-2">
+            <div class="md:col-span-2">
+                <label class="mb-1 block text-sm font-medium" for="bioInput">Bio</label>
+                <textarea id="bioInput" class="w-full rounded border px-3 py-2" rows="3"></textarea>
+            </div>
+            <div>
+                <label class="mb-1 block text-sm font-medium" for="avatarUrl">Avatar URL</label>
+                <input
+                id="avatarUrl"
+                type="url"
+                class="w-full rounded border px-3 py-2"
+                placeholder="https://..."
+                />
+            </div>
+            <div>
+                <label class="mb-1 block text-sm font-medium" for="avatarAlt">Avatar Alt</label>
+                <input id="avatarAlt" type="text" class="w-full rounded border px-3 py-2" />
+            </div>
+            <div>
+                <label class="mb-1 block text-sm font-medium" for="bannerUrl">Banner URL</label>
+                <input
+                id="bannerUrl"
+                type="url"
+                class="w-full rounded border px-3 py-2"
+                placeholder="https://..."
+                />
+            </div>
+            <div>
+                <label class="mb-1 block text-sm font-medium" for="bannerAlt">Banner Alt</label>
+                <input id="bannerAlt" type="text" class="w-full rounded border px-3 py-2" />
+            </div>
+            <div class="flex items-center gap-3 md:col-span-2">
+                <button
+                id="saveBtn"
+                class="rounded bg-primary px-4 py-2 text-white hover:bg-primary/90"
+                >
+                Save
+                </button>
+                <button id="cancelBtn" type="button" class="rounded border bg-white px-4 py-2">
+                Cancel
+                </button>
+            </div>
+            </form>
+            <p id="editError" class="mt-2 hidden text-error"></p>
+        </section>
+
+        <div id="profileTabs" class="mt-6 flex gap-2">
+            <button id="tabMine" class="rounded border bg-white px-3 py-1">My listings</button>
+            <button id="tabBids" class="rounded border bg-white px-3 py-1">My bids</button>
         </div>
-      </section>
 
-      <section class="grid gap-6 md:grid-cols-3">
-        <div class="rounded-xl border bg-white p-4 md:col-span-2">
-          <h2 class="mb-2 font-semibold">Bio</h2>
-          <p id="bio" class="text-neutral/90"></p>
-        </div>
+        <section class="mt-8">
+            <h2 class="mb-4 text-xl font-semibold">Listings</h2>
+            <div id="listings" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
+            <p id="listingsEmpty" class="hidden text-neutral/60">No listings yet.</p>
+        </section>
+        </main>
 
-        <aside class="rounded-xl border bg-white p-4">
-          <h3 class="mb-2 font-semibold">Account</h3>
-          <p class="text-sm">
-            <span class="font-semibold">Credits:</span> <span id="credits">0</span>
-          </p>
-          <div id="ownerActions" class="mt-4 hidden">
-            <button
-              id="editToggle"
-              class="w-full rounded bg-primary px-4 py-2 text-white hover:bg-primary/90"
-            >
-              Edit profile
-            </button>
-          </div>
-        </aside>
-      </section>
-
-      <section id="editSection" class="mt-6 hidden rounded-xl border bg-white p-4">
-        <h2 class="mb-4 font-semibold">Edit profile</h2>
-        <form id="profileForm" class="grid gap-4 md:grid-cols-2">
-          <div class="md:col-span-2">
-            <label class="mb-1 block text-sm font-medium" for="bioInput">Bio</label>
-            <textarea id="bioInput" class="w-full rounded border px-3 py-2" rows="3"></textarea>
-          </div>
-          <div>
-            <label class="mb-1 block text-sm font-medium" for="avatarUrl">Avatar URL</label>
-            <input
-              id="avatarUrl"
-              type="url"
-              class="w-full rounded border px-3 py-2"
-              placeholder="https://..."
-            />
-          </div>
-          <div>
-            <label class="mb-1 block text-sm font-medium" for="avatarAlt">Avatar Alt</label>
-            <input id="avatarAlt" type="text" class="w-full rounded border px-3 py-2" />
-          </div>
-          <div>
-            <label class="mb-1 block text-sm font-medium" for="bannerUrl">Banner URL</label>
-            <input
-              id="bannerUrl"
-              type="url"
-              class="w-full rounded border px-3 py-2"
-              placeholder="https://..."
-            />
-          </div>
-          <div>
-            <label class="mb-1 block text-sm font-medium" for="bannerAlt">Banner Alt</label>
-            <input id="bannerAlt" type="text" class="w-full rounded border px-3 py-2" />
-          </div>
-          <div class="flex items-center gap-3 md:col-span-2">
-            <button
-              id="saveBtn"
-              class="rounded bg-primary px-4 py-2 text-white hover:bg-primary/90"
-            >
-              Save
-            </button>
-            <button id="cancelBtn" type="button" class="rounded border bg-white px-4 py-2">
-              Cancel
-            </button>
-          </div>
-        </form>
-        <p id="editError" class="mt-2 hidden text-error"></p>
-      </section>
-
-      <div id="profileTabs" class="mt-6 flex gap-2">
-        <button id="tabMine" class="rounded border bg-white px-3 py-1">My listings</button>
-        <button id="tabBids" class="rounded border bg-white px-3 py-1">My bids</button>
-      </div>
-
-      <section class="mt-8">
-        <h2 class="mb-4 text-xl font-semibold">Listings</h2>
-        <div id="listings" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
-        <p id="listingsEmpty" class="hidden text-neutral/60">No listings yet.</p>
-      </section>
-    </main>
-
-    <script type="module" src="/js/app.js"></script>
-    <script type="module" src="/js/pages/profile.js"></script>
-  </body>
+        <script type="module" src="/js/app.js"></script>
+        <script type="module" src="/js/pages/profile.js"></script>
+    </body>
 </html>
