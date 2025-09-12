@@ -48,5 +48,5 @@ Unregistered users can browse and search listings, while registered users can cr
 ## Links
 - [Live Site](https://bargainbid.netlify.app/index.html)
 - [GitHub Repository](https://github.com/QueenWoofie/SP2-Bargain-Bid)
-- [Figma Design](---figma-link-here---)
+- [Figma Design](https://www.figma.com/design/doE3MBCSZCMSZAq9QUyUPZ/Semester-Project-2--Bargain-Bid?node-id=0-1&t=kaXFn3uMJ5Wl5XsT-1)
 - [Project Board](https://github.com/users/QueenWoofie/projects/9)
