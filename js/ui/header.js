@@ -20,8 +20,7 @@ export function renderSidebar() {
         id="sidebar"
         class="fixed inset-y-0 left-0 z-40 w-72 -translate-x-full transition-transform duration-200
           bg-white border-r p-4 lg:sticky lg:top-0 lg:translate-x-0 lg:h-screen"
-        aria-label="Sidebar navigation"
-      >
+        aria-label="Sidebar navigation">
         <div class="flex items-center justify-between">
           <a href="/index.html" class="flex items-center gap-2 text-xl font-semibold">
             <img src="/img/BargainBid.png" alt="Bargain Bid logo" class="h-full max-w-m m w-auto rounded-md rounded-md bg-white p-0.5 ring-1 ring-black/10">
@@ -82,7 +81,6 @@ export function renderSidebar() {
     deskBadge.classList.remove('hidden');
   }
 
-  // Events
   const logoutBtn = document.getElementById('logoutBtn');
   if (logoutBtn) logoutBtn.addEventListener('click', logout);
 

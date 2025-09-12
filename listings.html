@@ -1,67 +1,67 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bargain Bid – Browse</title>
     <link rel="icon" href="/img/favicon.ico" />
     <link href="/css/style.css" rel="stylesheet" />
-  </head>
-  <body class="bg-base-100 text-neutral">
+</head>
+<body class="bg-base-100 text-neutral">
     <main class="mx-auto max-w-6xl px-4 py-8">
-      <h1 class="mb-4 text-2xl font-bold">Browse Listings</h1>
+        <h1 class="mb-4 text-2xl font-bold">Browse Listings</h1>
 
-      <form id="filters" class="mb-6 grid gap-3 rounded-xl border bg-white p-4 md:grid-cols-3">
-        <div>
-          <label class="mb-1 block text-sm font-medium" for="q">Search</label>
-          <input
-            id="q"
-            name="q"
-            type="search"
-            class="w-full rounded border px-3 py-2"
-            placeholder="Search titles/tags…"
-          />
+        <form id="filters" class="mb-6 grid gap-3 rounded-xl border bg-white p-4 md:grid-cols-3">
+            <div>
+            <label class="mb-1 block text-sm font-medium" for="q">Search</label>
+            <input
+                id="q"
+                name="q"
+                type="search"
+                class="w-full rounded border px-3 py-2"
+                placeholder="Search titles/tags…"
+            />
+            </div>
+
+            <div>
+            <label class="mb-1 block text-sm font-medium" for="sort">Sort</label>
+            <select id="sort" name="sort" class="w-full rounded border px-3 py-2">
+                <option value="">Relevance</option>
+                <option value="created">Newest</option>
+                <option value="-created">Oldest</option>
+                <option value="endsAt">Ending Soon</option>
+                <option value="-endsAt">Ending Latest</option>
+            </select>
+            </div>
+
+            <div class="flex items-end gap-3">
+            <label class="inline-flex items-center gap-2">
+                <input id="_active" name="_active" type="checkbox" class="rounded border" checked />
+                <span class="text-sm">Only active</span>
+            </label>
+            <button class="ml-auto rounded bg-primary px-4 py-2 text-white hover:bg-primary/90">
+                Apply
+            </button>
+            </div>
+        </form>
+
+        <div id="feed" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
+
+        <div class="mt-6 flex items-center justify-center gap-2">
+            <button id="prevBtn" class="rounded border bg-white px-4 py-2 disabled:opacity-40">
+            Prev
+            </button>
+            <span id="pageInfo" class="px-2 text-sm"></span>
+            <button id="nextBtn" class="rounded border bg-white px-4 py-2 disabled:opacity-40">
+            Next
+            </button>
         </div>
 
-        <div>
-          <label class="mb-1 block text-sm font-medium" for="sort">Sort</label>
-          <select id="sort" name="sort" class="w-full rounded border px-3 py-2">
-            <option value="">Relevance</option>
-            <option value="created">Newest</option>
-            <option value="-created">Oldest</option>
-            <option value="endsAt">Ending Soon</option>
-            <option value="-endsAt">Ending Latest</option>
-          </select>
-        </div>
-
-        <div class="flex items-end gap-3">
-          <label class="inline-flex items-center gap-2">
-            <input id="_active" name="_active" type="checkbox" class="rounded border" checked />
-            <span class="text-sm">Only active</span>
-          </label>
-          <button class="ml-auto rounded bg-primary px-4 py-2 text-white hover:bg-primary/90">
-            Apply
-          </button>
-        </div>
-      </form>
-
-      <div id="feed" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
-
-      <div class="mt-6 flex items-center justify-center gap-2">
-        <button id="prevBtn" class="rounded border bg-white px-4 py-2 disabled:opacity-40">
-          Prev
-        </button>
-        <span id="pageInfo" class="px-2 text-sm"></span>
-        <button id="nextBtn" class="rounded border bg-white px-4 py-2 disabled:opacity-40">
-          Next
-        </button>
-      </div>
-
-      <p id="status" class="mt-4 text-sm text-neutral/70"></p>
-      <p id="error" class="mt-4 hidden text-error"></p>
+        <p id="status" class="mt-4 text-sm text-neutral/70"></p>
+        <p id="error" class="mt-4 hidden text-error"></p>
     </main>
 
     <script type="module" src="/js/app.js"></script>
     <script type="module" src="/js/pages/listings.js"></script>
-  </body>
+</body>
 </html>

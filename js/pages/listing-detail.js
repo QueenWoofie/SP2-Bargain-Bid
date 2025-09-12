@@ -1,6 +1,7 @@
 import { getListing, placeBid, deleteListing } from '../api/listings.js';
 import { getProfile, getToken } from '../api/auth.js';
 import { openLightbox } from '../ui/lightbox.js';
+import { imgTag } from '../ui/img.js';
 
 const errEl = document.getElementById('error');
 const hero = document.getElementById('hero');
@@ -60,29 +61,27 @@ async function load() {
     const data = await getListing(id, { _seller: true, _bids: true });
 
     // HERO
-    const heroUrl = firstImage(data.media) || 'https://picsum.photos/seed/ah-detail/1200/600';
-    hero.innerHTML = `
-      <img id="heroImg" src="${heroUrl}" alt="${data.title || 'Listing'}"
-           class="w-full h-60 md:h-80 object-cover md:object-contain bg-white rounded">
-    `;
-    document
-      .getElementById('heroImg')
-      .addEventListener('click', () => openLightbox(heroUrl, data.title || 'Listing'));
-
+    const heroUrl = firstImage(data.media);
+    hero.innerHTML = imgTag(heroUrl, {
+      alt: data.title || 'Listing',
+      classes: 'w-full h-60 md:h-80 object-cover md:object-contain bg-white rounded',
+    });
+    document.querySelector('#hero img')
+      ?.addEventListener('click', () => openLightbox(heroUrl || "/img/placeholder_1200x800.png", data.title || 'Listing'));
+    
     // GALLERY
     const imgs = Array.isArray(data.media) ? data.media : [];
-    gallery.innerHTML = imgs
-      .map(
-        (m) => `
-      <img data-full="${m.url}" src="${m.url}" alt="${m.alt || data.title || 'Image'}"
-           class="w-full h-24 object-cover rounded cursor-zoom-in">
-    `
-      )
-      .join('');
+    gallery.innerHTML = imgs.map(m => `
+      ${imgTag(m?.url, {
+        alt: m?.alt || data.title || 'Image',
+        classes: 'w-full h-24 object-cover rounded cursor-zoom-in bg-base-200',
+      })}      
+    `).join('');
+
     gallery
       .querySelectorAll('img')
       .forEach((img) =>
-        img.addEventListener('click', () => openLightbox(img.dataset.full, img.alt))
+        img.addEventListener('click', () => openLightbox(img.currentSrc || img.src, img.alt))
       );
 
     // TITLES
