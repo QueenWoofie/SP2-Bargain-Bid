@@ -67,13 +67,6 @@ function parseHashtag(q) {
   const m = q.match(/#([\p{L}\p{N}_-]+)/u);
   return m ? m[1] : null;
 }
-
-function mergeUniqueById(a = [], b = []) {
-  const map = new Map();
-  [...a, ...b].forEach((x) => x && x.id && map.set(x.id, x));
-  return [...map.values()];
-}
-
 function sortItems(items, sort) {
   if (!sort) return items;
   const dir = sort.startsWith("-") ? -1 : 1;
@@ -127,7 +120,37 @@ function cardTemplate(item) {
   `;
 }
 
-let canGoNext = false;
+async function fetchAllList(argsBuilder, args, perPage = 50) {
+  let page = 1;
+  const all = [];
+  while (true) {
+    const res = await argsBuilder({ ...args, page, limit: perPage });
+    const chunk = res?.data || [];
+    all.push(...chunk);
+
+    const meta = res?.meta;
+    const pageCount = meta?.pageCount ?? (chunk.length < perPage ? page : page + 1);
+    if (page >= pageCount || chunk.length < perPage) break;
+    page++;
+  }
+  return all;
+}
+
+async function fetchAllSearch(q, extra, perPage = 50) {
+  let page = 1;
+  const all = [];
+  while (true) {
+    const res = await searchListings(q, { ...extra, page, limit: perPage });
+    const chunk = res?.data || [];
+    all.push(...chunk);
+
+    const meta = res?.meta;
+    const pageCount = meta?.pageCount ?? (chunk.length < perPage ? page : page + 1);
+    if (page >= pageCount || chunk.length < perPage) break;
+    page++;
+  }
+  return all;
+}
 
 async function load() {
   errEl?.classList.add("hidden");
@@ -141,32 +164,44 @@ async function load() {
   const _active = (u.searchParams.get("_active") ?? "true") !== "false";
 
   try {
-    const base = { _seller: true, _bids: true, page, limit };
+    const base = { _seller: true, _bids: true };
     const tagFromHash = parseHashtag(q);
-
+    const isSearching = !!(tagFromHash || q.trim());
     let items = [];
-    let meta = null;
 
-    if (tagFromHash) {
-      const res = await listListings({ ...base, _tag: tagFromHash });
-      items = res?.data || [];
-      meta = res?.meta || null;
-    } else if (q.trim()) {
-      const qTag = slugifyTag(q);
-      const [kwRes, tagRes] = await Promise.allSettled([
-        searchListings(q, base),
-        qTag ? listListings({ ...base, _tag: qTag }) : Promise.resolve({ data: [] }),
-      ]);
+    if (isSearching) {
+      if (tagFromHash) {
+        items = await fetchAllList((args) => listListings(args), { ...base, _tag: tagFromHash });
+      } else {
+        const qTag = slugifyTag(q);
+        const [kwAll, tagAll] = await Promise.all([
+          fetchAllSearch(q, base).catch(() => []),
+          qTag
+            ? fetchAllList((args) => listListings(args), { ...base, _tag: qTag }).catch(() => [])
+            : Promise.resolve([]),
+        ]);
+        const uniq = new Map();
+        [...kwAll, ...tagAll].forEach((x) => x && x.id && uniq.set(x.id, x));
+        items = [...uniq.values()];
+      }
 
-      const kwItems = kwRes.status === "fulfilled" ? kwRes.value?.data || [] : [];
-      const tgItems = tagRes.status === "fulfilled" ? tagRes.value?.data || [] : [];
-      items = mergeUniqueById(kwItems, tgItems);
-
-      meta = kwRes.status === "fulfilled" ? kwRes.value?.meta || null : null;
+      prevBtn?.classList.add("hidden");
+      nextBtn?.classList.add("hidden");
+      pageInfo && (pageInfo.textContent = `${items.length} result${items.length === 1 ? "" : "s"}`);
     } else {
-      const res = await listListings({ ...base, _active });
+      const res = await listListings({ ...base, _active, page, limit });
       items = res?.data || [];
-      meta = res?.meta || null;
+
+      prevBtn?.classList.remove("hidden");
+      nextBtn?.classList.remove("hidden");
+
+      const meta = res?.meta;
+      const pageCount =
+        meta?.pageCount ??
+        (items.length < limit && page === 1 ? 1 : items.length < limit ? page : page + 1);
+      pageInfo && (pageInfo.textContent = `Page ${page}${pageCount ? ` of ${pageCount}` : ""}`);
+      if (prevBtn) prevBtn.disabled = page <= 1;
+      if (nextBtn) nextBtn.disabled = pageCount ? page >= pageCount : items.length < limit;
     }
 
     if (_active) items = items.filter(isActive);
@@ -174,22 +209,10 @@ async function load() {
 
     if (!items.length) {
       const tagShown = tagFromHash || slugifyTag(q);
-      showEmpty(
-        feed,
-        tagShown ? `No listings found for tag #${tagShown}.` : "No listings found."
-      );
+      showEmpty(feed, tagShown ? `No listings found for tag #${tagShown}.` : "No listings found.");
     } else {
       feed.innerHTML = items.map(cardTemplate).join("");
     }
-
-    const pageCount = meta?.pageCount ?? null;
-    const hasPrev = page > 1;
-    const hasNext = pageCount ? page < pageCount : items.length === limit;
-
-    pageInfo && (pageInfo.textContent = pageCount ? `Page ${page} of ${pageCount}` : `Page ${page}`);
-    if (prevBtn) prevBtn.disabled = !hasPrev;
-    if (nextBtn) nextBtn.disabled = !hasNext;
-    canGoNext = hasNext;
   } catch (e) {
     console.error(e);
     showError(feed, e?.message || "Failed to load listings");
@@ -209,14 +232,11 @@ form?.addEventListener("submit", (e) => {
 
 prevBtn?.addEventListener("click", () => {
   const page = getInt("page", 1);
-  if (page <= 1) return;
-  setParam("page", page - 1);
+  setParam("page", Math.max(1, page - 1));
   history.replaceState({}, "", u);
   load();
 });
-
 nextBtn?.addEventListener("click", () => {
-  if (!canGoNext) return;
   const page = getInt("page", 1);
   setParam("page", page + 1);
   history.replaceState({}, "", u);
